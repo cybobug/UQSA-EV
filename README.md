@@ -1,7 +1,6 @@
 # UQSA-EV: A Unified Quantum-Resilient Security Architecture
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Paper](https://img.shields.io/badge/Paper-arXiv-B31B1B.svg)](https://arxiv.org/)
 
 This repository contains the official implementation and research artifacts for the **UQSA-EV** framework, as presented in the paper: *"UQSA-EV: A Unified Quantum-Resilient Security Architecture for Intelligent EV Charging Networks"*.
 
@@ -35,5 +34,5 @@ If you utilize this framework or PoC in your research, please cite:
   title={UQSA-EV: A Unified Quantum-Resilient Security Architecture for Intelligent EV Charging Networks},
   author={Haswani, Garvit and Kandpal, Mahi},
   journal={arXiv preprint arXiv:2602.xxxxx},
-  year={2025}
+  year={2026}
 }

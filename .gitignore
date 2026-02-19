@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Models & Data
+*.pth
+*.csv
+uqsa-ev-poc/tcn-service/data/*.csv
+
+# Plots
+performance_comparison.png
+roc_curve_final.png
+roc_curve_dataset.png
+
+# LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.pdf
+*.gz
+*.fdb_latexmk
+*.fls
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Submission ZIP
+*.zip

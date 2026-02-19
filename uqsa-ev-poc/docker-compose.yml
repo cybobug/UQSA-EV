@@ -1,0 +1,96 @@
+services:
+  # 1. CSMS: The Central System (PQC Server)
+  csms:
+    build:
+      context: ./csms
+    container_name: uqsa-csms
+    environment:
+      - CERT_DIR=/app/certs
+      - CSMS_PORT=8080
+      - FLASK_PORT=443
+    ports:
+      - "8080:8080"
+      - "443:443"
+    volumes:
+      - ./certs:/app/certs:ro
+    networks:
+      - uqsa_net
+    healthcheck:
+      test: [ "CMD", "curl", "-k", "https://localhost:443/certs/ca.crt" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # 2. Sidecar: The Security Proxy
+  sidecar:
+    build:
+      context: ./sidecar
+    container_name: uqsa-sidecar
+    depends_on:
+      - csms
+    environment:
+      - CSMS_URL=wss://csms:8080
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./certs:/app/certs:ro
+      - proxy_logs:/app/logs
+    networks:
+      - uqsa_net
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+    restart: unless-stopped
+
+  # 3. EVSE: The Charger Simulator
+  evse-sim:
+    build:
+      context: ./evse-sim
+    container_name: uqsa-evse
+    depends_on:
+      - sidecar
+    environment:
+      - PROXY_URL=ws://sidecar:9000
+      - CHARGE_POINT_ID=EVSE-001
+    networks:
+      - uqsa_net
+    restart: on-failure
+
+  # 4. TCN: Anomaly Detection Engine
+  tcn-service:
+    build:
+      context: ./tcn-service
+    container_name: uqsa-tcn
+    volumes:
+      - proxy_logs:/app/logs:ro
+    networks:
+      - uqsa_net
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+    restart: unless-stopped
+
+  # 5. Attacker: Simulation Tool
+  attacker:
+    build:
+      context: ./attacker
+    container_name: uqsa-attacker
+    environment:
+      - TARGET_URL=ws://sidecar:9000
+      - ATTACK_INTENSITY=100
+    networks:
+      - uqsa_net
+    profiles:
+      - tools
+
+volumes:
+  proxy_logs:
+
+
+networks:
+  uqsa_net:
+    driver: bridge

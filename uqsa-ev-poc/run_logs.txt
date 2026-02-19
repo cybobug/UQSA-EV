@@ -1,0 +1,21 @@
+﻿docker : open C:\Users\garvi
+\OneDrive\Documents\Codes\EV
+\uqsa-ev-poc\uqsa-ev-poc\doc
+ker-compose.yml: The system 
+cannot find the path 
+specified.
+At line:1 char:1
++ docker compose -f ./uqsa-e
+v-poc/docker-compose.yml 
+run evse-sim pytho ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
+    + CategoryInfo          
+    : NotSpecified: (open   
+  C:\Users\g...path speci   
+ fied.:String) [], Remot    
+eException
+    + FullyQualifiedErrorId 
+    : NativeCommandError
+ 
